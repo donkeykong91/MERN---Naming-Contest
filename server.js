@@ -14,7 +14,11 @@ server.set("view engine", "ejs");
 
 server.get("/", function (request, response) {
 
-  response.send("Hello Express");
+  response.render("index", {
+
+    content: "Hello Express and <em>EJS</em>!"
+
+  });
 
 });
 
