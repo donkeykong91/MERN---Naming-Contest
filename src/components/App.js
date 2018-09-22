@@ -12,24 +12,6 @@ class App extends React.Component {
   };
 
 
-  componentDidMount() {
-
-    console.log("Did Mount");
-
-    debugger;
-
-  }
-
-
-  componentWillUnmount() {
-
-    console.log("Will Unmount");
-
-    debugger;
-
-  }
-
-
   render() {
 
     return (

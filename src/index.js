@@ -14,15 +14,3 @@ ReactDOM.render(
   document.getElementById('root')
 
 );
-
-setTimeout( function () {
-
-  ReactDOM.render(
-
-    <h2>....</h2>,
-
-    document.getElementById("root")
-
-  );
-
-}, 4000);
