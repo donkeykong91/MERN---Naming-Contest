@@ -4,7 +4,7 @@ import Header from "./Header.js";
 
 import ContestPreview from "./ContestPreview";
 
-import data from "../testData";
+import axios from "axios";
 
 
 class App extends React.Component {
@@ -20,15 +20,27 @@ class App extends React.Component {
 
   componentDidMount() {
 
-    this.setState(
+    axios.get("/api/contests")
 
-      {
+         .then( (resp) => {
 
-        contests: data.contests
+           this.setState(
 
-      }
+             {
 
-    );
+               contests: resp.data.contests
+
+             }
+
+           );
+
+         })
+
+         .catch(
+
+           console.error
+
+         )
 
   }
 

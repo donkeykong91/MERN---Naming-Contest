@@ -1,12 +1,14 @@
 import express from "express";
 
+import data from "../src/testData"
+
 const router = express.Router();
 
-router.get("/", function (request, response) {
+router.get("/contests", function (request, response) {
 
   response.send({
 
-    data: []
+    contests: data.contests
 
   });
 
