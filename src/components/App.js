@@ -2,6 +2,8 @@ import React from "react";
 
 import Header from "./Header.js";
 
+import ContestPreview from "./ContestPreview";
+
 
 class App extends React.Component {
 
@@ -23,7 +25,15 @@ class App extends React.Component {
 
         <div>
 
-          ...
+          {this.props.contests.map( function (contest) {
+
+            return (
+
+              <ContestPreview {...contest}/>
+
+            );
+
+          })}
 
         </div>
 
