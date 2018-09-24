@@ -10,6 +10,8 @@ import sassMiddleware from "node-sass-middleware";
 
 import path from "path";
 
+import "./serverRender";
+
 const server = express();
 
 
@@ -48,7 +50,7 @@ server.use(
 );
 
 
-server.listen(config.port, function () {
+server.listen(config.port, config.host, function () {
 
   console.info("Express listening on port ", config.port);
 
