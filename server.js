@@ -22,11 +22,13 @@ server.get("/", function (request, response) {
 
   serverRender()
 
-    .then( function (content) {
+    .then( function ( { initialMarkup, initialData }={} ) {
 
       response.render("index", {
 
-        content
+        initialMarkup,
+
+        initialData
 
       });
 
