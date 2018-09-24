@@ -4,8 +4,6 @@ import Header from "./Header.js";
 
 import ContestPreview from "./ContestPreview";
 
-import axios from "axios";
-
 
 class App extends React.Component {
 
@@ -13,34 +11,12 @@ class App extends React.Component {
 
     pageHeader: "Naming Contests",
 
-    contests: []
+    contests: this.props.initialContests
 
   };
 
 
   componentDidMount() {
-
-    axios.get("/api/contests")
-
-         .then( (resp) => {
-
-           this.setState(
-
-             {
-
-               contests: resp.data.contests
-
-             }
-
-           );
-
-         })
-
-         .catch(
-
-           console.error
-
-         )
 
   }
 

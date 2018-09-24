@@ -4,11 +4,29 @@ import ReactDOM from 'react-dom';
 
 import App from "./components/App";
 
+import axios from "axios";
 
-ReactDOM.render(
 
-  <App />,
+axios.get("/api/contests")
 
-  document.getElementById('root')
+     .then( function (resp) {
 
-);
+       return (
+
+         ReactDOM.render(
+
+           <App initialContests={resp.data.contests} />,
+
+           document.getElementById('root')
+
+         )
+
+       );
+
+     })
+
+     .catch(
+
+       console.error
+
+     );

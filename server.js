@@ -10,7 +10,7 @@ import sassMiddleware from "node-sass-middleware";
 
 import path from "path";
 
-import "./serverRender";
+import serverRender from  "./serverRender";
 
 const server = express();
 
@@ -20,11 +20,20 @@ server.set("view engine", "ejs");
 
 server.get("/", function (request, response) {
 
-  response.render("index", {
+  serverRender()
 
-    content: "Hello Express and <em>EJS</em>!"
+    .then( function (content) {
 
-  });
+      response.render("index", {
+
+        content
+
+      });
+
+    })
+
+    .catch(console.error);
+
 
 });
 
