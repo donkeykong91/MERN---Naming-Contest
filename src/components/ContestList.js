@@ -5,7 +5,7 @@ import ContestPreview from "./ContestPreview";
 import PropTypes from "prop-types";
 
 
-const ContestList = function ( { contests }={} ) {
+const ContestList = function ( { contests, onContestClick }={} ) {
 
   return (
 
@@ -18,6 +18,8 @@ const ContestList = function ( { contests }={} ) {
           <ContestPreview
 
             key={contest.id}
+
+            onClick={onContestClick}
 
             {...contest}
 
@@ -36,7 +38,9 @@ const ContestList = function ( { contests }={} ) {
 
 ContestList.propTypes = {
 
-  contests: PropTypes.array
+  contests: PropTypes.array,
+
+  onContestClick: PropTypes.func.isRequired
 
 }
 
