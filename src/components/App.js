@@ -2,7 +2,7 @@ import React from "react";
 
 import Header from "./Header.js";
 
-import ContestPreview from "./ContestPreview";
+import ContestList from "./ContestList";
 
 
 class App extends React.Component {
@@ -30,25 +30,7 @@ class App extends React.Component {
 
         <Header message={this.state.pageHeader} />
 
-        <div>
-
-          {this.state.contests.map( function (contest) {
-
-            return (
-
-              <ContestPreview
-
-                key={contest.id}
-
-                {...contest}
-
-              />
-
-            );
-
-          })}
-
-        </div>
+        <ContestList contests={this.state.contests} />
 
       </div>
 
