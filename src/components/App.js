@@ -4,6 +4,8 @@ import Header from "./Header.js";
 
 import ContestList from "./ContestList";
 
+import Contest from "./Contest";
+
 
 const pushState = function (obj, url) {
 
@@ -28,17 +30,58 @@ class App extends React.Component {
   }
 
 
-  fetchContest = function (contestId) {
+  fetchContest = (contestId) => {
 
-    return pushState(
+    pushState(
 
-            {currentContestId: contestId},
+      {currentContestId: contestId},
 
-            `/contest/${contestId}`
+      `/contest/${contestId}`
 
-           );
+    )
+
+    this.setState({
+
+      pageHeader: this.state.contests[contestId].contestName,
+
+      currentContestId: contestId
+
+    });
 
   };
+
+
+  currentContent() {
+
+    if (this.state.currentContestId) {
+
+      return (
+
+        <Contest
+
+          {...this.state.contests[this.state.currentContestId]}
+
+        />
+
+      );
+
+    } else {
+
+      return (
+
+        <ContestList
+
+          onContestClick={this.fetchContest}
+
+          contests={this.state.contests}
+
+        />
+
+      );
+
+    }
+
+  }
 
 
   render() {
@@ -50,13 +93,7 @@ class App extends React.Component {
 
         <Header message={this.state.pageHeader} />
 
-        <ContestList
-
-          onContestClick={this.fetchContest}
-
-          contests={this.state.contests}
-
-        />
+        {this.currentContent()}
 
       </div>
 
