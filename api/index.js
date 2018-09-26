@@ -17,7 +17,7 @@ router.get("/contests", function (request, response) {
 
   response.send({
 
-    contests:
+    contests: contests
 
   });
 

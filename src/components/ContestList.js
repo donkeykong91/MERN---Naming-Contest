@@ -11,17 +11,17 @@ const ContestList = function ( { contests, onContestClick }={} ) {
 
     <div className="ContestList">
 
-      {contests.map( function (contest) {
+      {Object.keys(contests).map( function (contestId) {
 
         return (
 
           <ContestPreview
 
-            key={contest.id}
+            key={contestId}
 
             onClick={onContestClick}
 
-            {...contest}
+            {...contests[contestId]}
 
           />
 
@@ -38,7 +38,7 @@ const ContestList = function ( { contests, onContestClick }={} ) {
 
 ContestList.propTypes = {
 
-  contests: PropTypes.array,
+  contests: PropTypes.object,
 
   onContestClick: PropTypes.func.isRequired
 
