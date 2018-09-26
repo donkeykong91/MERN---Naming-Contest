@@ -8,7 +8,13 @@ router.get("/contests", function (request, response) {
 
   response.send({
 
-    contests: data.contests
+    contests: data.contests.reduce(function (contestDictionary, contest) {
+
+      contestDictionary[contest.id] = contest;
+
+      return contestDictionary;
+
+    }, {})
 
   });
 
