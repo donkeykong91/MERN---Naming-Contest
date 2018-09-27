@@ -8,6 +8,8 @@ import Contest from "./Contest";
 
 import * as api from "../api";
 
+import PropTypes from "prop-types";
+
 
 const pushState = function (obj, url) {
 
@@ -18,13 +20,13 @@ const pushState = function (obj, url) {
 
 class App extends React.Component {
 
-  state = {
+  static propTypes = {
 
-    pageHeader: "Naming Contests",
+    initialData: PropTypes.object.isRequired
 
-    contests: this.props.initialContests
+  }
 
-  };
+  state = this.props.initialData;
 
 
   componentDidMount() {
@@ -40,15 +42,13 @@ class App extends React.Component {
 
       `/contest/${contestId}`
 
-    )
+    );
 
     api.fetchContest(contestId)
 
       .then( contest => {
 
         this.setState({
-
-          pageHeader: contest.contestName,
 
           currentContestId: contest.id,
 
@@ -67,6 +67,28 @@ class App extends React.Component {
   };
 
 
+  currentContest() {
+
+    return this.state.contests[this.state.currentContestId];
+
+  }
+
+
+  pageHeader() {
+
+    if (this.state.currentContestId) {
+
+      return this.currentContest().contestName;
+
+    } else {
+
+      return "Naming Contests";
+
+    }
+
+  }
+
+
   currentContent() {
 
     if (this.state.currentContestId) {
@@ -75,7 +97,7 @@ class App extends React.Component {
 
         <Contest
 
-          {...this.state.contests[this.state.currentContestId]}
+          {...this.currentContest()}
 
         />
 
@@ -107,7 +129,7 @@ class App extends React.Component {
 
       <div className="App">
 
-        <Header message={this.state.pageHeader} />
+        <Header message={this.pageHeader()} />
 
         {this.currentContent()}
 

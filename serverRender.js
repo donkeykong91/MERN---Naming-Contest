@@ -15,7 +15,7 @@ const serverRender = function () {
 
     axios.get(`${config.serverUrl}/api/contests`)
 
-      .then( function (resp) {
+      .then( function (response) {
 
          return {
 
@@ -23,13 +23,13 @@ const serverRender = function () {
 
              <App
 
-                initialContests={resp.data.contests}
+                initialData={response.data}
 
              />
 
            ),
 
-           initialData: resp.data
+           initialData: response.data
 
          }
 
