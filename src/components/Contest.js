@@ -11,7 +11,7 @@ class Contest extends Component {
 
       <div className="Contest">
 
-        {this.props.id}
+        {this.props.description}
 
       </div>
 
@@ -24,7 +24,7 @@ class Contest extends Component {
 
 Contest.propTypes = {
 
-  id: PropTypes.number.isRequired
+  description: PropTypes.string.isRequired
 
 };
 

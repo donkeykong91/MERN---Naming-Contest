@@ -6,6 +6,8 @@ import ContestList from "./ContestList";
 
 import Contest from "./Contest";
 
+import * as api from "../api";
+
 
 const pushState = function (obj, url) {
 
@@ -40,13 +42,27 @@ class App extends React.Component {
 
     )
 
-    this.setState({
+    api.fetchContest(contestId)
 
-      pageHeader: this.state.contests[contestId].contestName,
+      .then( contest => {
 
-      currentContestId: contestId
+        this.setState({
 
-    });
+          pageHeader: contest.contestName,
+
+          currentContestId: contest.id,
+
+          contests: {
+
+            ...this.state.contests,
+
+            [contest.id]: contest
+
+          }
+
+        });
+
+      });
 
   };
 
