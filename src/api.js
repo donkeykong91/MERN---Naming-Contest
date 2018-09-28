@@ -11,3 +11,15 @@ export const fetchContest = function (contestId) {
               });
 
 }
+
+export const fetchContestList = function () {
+
+  return axios.get(`/api/contests`)
+
+              .then(function (response) {
+
+                return response.data.contests;
+
+              });
+
+}
