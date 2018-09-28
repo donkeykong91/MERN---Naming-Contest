@@ -18,6 +18,13 @@ const pushState = function (obj, url) {
 };
 
 
+const onPopState = function (handler) {
+
+  window.onpopstate = handler;
+
+};
+
+
 class App extends React.Component {
 
   static propTypes = {
@@ -31,11 +38,22 @@ class App extends React.Component {
 
   componentDidMount() {
 
-    window.onpopstate = function (event) {
+    onPopState( event => {
 
-      console.log(event);
+      this.setState({
 
-    }
+        currentContestId: (event.state || {}).currentContestId
+
+      });
+
+    });
+
+  }
+
+
+  componentWillUnmount() {
+
+    onPopState(null);
 
   }
 
