@@ -18,7 +18,9 @@ const server = express();
 server.set("view engine", "ejs");
 
 
-server.get("/", function (request, response) {
+server.get(["/", "/contest/:contestId"], function (request, response) {
+
+  console.log(request.params.contestId);
 
   serverRender()
 

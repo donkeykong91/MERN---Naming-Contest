@@ -9,13 +9,59 @@ import axios from "axios";
 import config from "./config";
 
 
-const serverRender = function () {
+const getApiUrl = function (contestId) {
+
+    if (contestId) {
+
+      return `${config.serverUrl}/api/contests/:contestId`;
+
+    } else {
+
+      return `${config.serverUrl}/api/contests`;
+
+    }
+
+};
+
+
+const getInitialData = function (contestId, apiData) {
+
+  if (contestId) {
+
+    return {
+
+      currentContestId: apiData.id,
+
+      contests: {
+
+        [apiData.id]: apiData
+
+      }
+
+    };
+
+  } else {
+
+    return {
+
+      contests: apiData.contests
+
+    };
+
+  }
+
+};
+
+
+const serverRender = function (contestId) {
 
   return (
 
-    axios.get(`${config.serverUrl}/api/contests`)
+    axios.get(getApiUrl(contestId))
 
       .then( function (response) {
+
+         const initialData = getInitialData(contestId, response.data);
 
          return {
 
@@ -23,13 +69,13 @@ const serverRender = function () {
 
              <App
 
-                initialData={response.data}
+                initialData={initialData}
 
              />
 
            ),
 
-           initialData: response.data
+           initialData
 
          }
 
