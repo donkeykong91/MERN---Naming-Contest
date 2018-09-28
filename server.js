@@ -20,9 +20,7 @@ server.set("view engine", "ejs");
 
 server.get(["/", "/contest/:contestId"], function (request, response) {
 
-  console.log(request.params.contestId);
-
-  serverRender()
+  serverRender(request.params.contestId)
 
     .then( function ( { initialMarkup, initialData }={} ) {
 

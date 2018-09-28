@@ -13,7 +13,7 @@ const getApiUrl = function (contestId) {
 
     if (contestId) {
 
-      return `${config.serverUrl}/api/contests/:contestId`;
+      return `${config.serverUrl}/api/contests/${contestId}`;
 
     } else {
 
