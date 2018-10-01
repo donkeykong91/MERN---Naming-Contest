@@ -1,41 +1,105 @@
 import express from "express";
 
-import data from "../src/testData"
+import { MongoClient } from "mongodb";
+
+import assert from "assert";
+
+import config from "../config";
+
+
+let mongoDataBase;
+
+let testDataBase;
+
+MongoClient.connect(config.mongodbUri, { useNewUrlParser: true }, function (error, database) {
+
+  assert.strictEqual(null, error);
+
+  mongoDataBase = database;
+
+  testDataBase = mongoDataBase.db("test");
+
+});
+
 
 const router = express.Router();
-
-const contests = data.contests.reduce(
-
-  function (contestDictionary, contest) {
-
-    contestDictionary[contest.id] = contest;
-
-    return contestDictionary;
-
-  }, {});
 
 
 router.get("/contests", function (request, response) {
 
-  response.send({
+  let contests = {};
 
-    contests: contests
+  testDataBase.collection("contests").find({})
 
-  });
+              .project({
+
+                id: 1,
+
+                categoryName: 1,
+
+                contestName: 1
+
+              })
+
+              .forEach( function (contest) {
+
+                assert.ok(contest != null);
+
+                contests[contest.id] = contest;
+
+              }, function (error) {
+
+                assert.strictEqual(null, error);
+
+                response.send( { contests } );
+
+              });
 
 });
 
 
 router.get("/contests/:contestId", function (request, response) {
 
-  {let contest = contests[request.params.contestId];
+  testDataBase.collection("contests")
 
-    contest.description = `Lorem ipsum dolor sit amet, erat laoreet, ipsum nullam ultrices purus fermentum massa mattis, sed non faucibus. Ac vel ultrices aliquam, sed commodo ligula volutpat mauris. Maecenas amet in vitae, mi mauris sit neque, volutpat odio, iaculis nisl. Ligula et laoreet, non condimentum mi integer sit quis nulla, libero wisi in commodo aliquam libero, cursus quam wisi feugiat eu. Ac adipiscing mi, taciti tristique maecenas, a sit sed blandit, vel odio tempus, nam fringilla ligula massa ipsum eu integer. Vivamus hendrerit nec, magna condimentum dolor. In sit quisque nisl duis id, sit in, egestas dolor erat auctor mattis mi pede, consectetuer turpis in. Egestas ut amet dictum, pulvinar rhoncus nibh eget pretium, suspendisse a in orci condimentum. Metus quisque mollis sed, nullam nullam urna dolor, non eget elit quam sociis, vitae justo cursus iaculis a risus vivamus, a egestas. Risus augue egestas fringilla aliquam praesent eget, turpis ut nibh, sagittis velit et molestie integer et.`
+              .findOne({
+
+                id: Number(request.params.contestId)
+
+              })
+
+              .then( function (contest) {
+
+                response.send(contest);
+
+              })
+
+              .catch(console.error);
+
+});
 
 
-    response.send(contest);
+router.get("/names/:nameIds", function (request, response) {
 
-  }
+  const nameIds = request.params.nameIds.split(",").map(Number);
+
+  let names = {};
+
+  testDataBase.collection("names").find({ id: { $in: nameIds }})
+
+              .forEach( function (name) {
+
+                assert.ok(name != null);
+
+                names[name.id] = name;
+
+              }, function (error) {
+
+                assert.strictEqual(null, error);
+
+                response.send( { names } );
+
+              });
 
 });
 
