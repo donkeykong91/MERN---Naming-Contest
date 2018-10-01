@@ -10,7 +10,7 @@ export const fetchContest = function (contestId) {
 
               });
 
-}
+};
 
 export const fetchContestList = function () {
 
@@ -22,4 +22,17 @@ export const fetchContestList = function () {
 
               });
 
-}
+};
+
+
+export const fetchNames = function (nameIds) {
+
+  return axios.get(`/api/names/${nameIds.join(",")}`)
+
+              .then(function (response) {
+
+                return response.data.names;
+
+              });
+
+};
