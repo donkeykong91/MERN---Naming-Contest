@@ -34,7 +34,13 @@ server.get(["/", "/contest/:contestId"], function (request, response) {
 
     })
 
-    .catch(console.error);
+    .catch( function(error) {
+
+      console.error(error);
+
+      response.status(404).send("Bad Request");
+
+    });
 
 
 });

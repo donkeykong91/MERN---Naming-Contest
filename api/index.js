@@ -1,6 +1,6 @@
 import express from "express";
 
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectID } from "mongodb";
 
 import assert from "assert";
 
@@ -33,8 +33,6 @@ router.get("/contests", function (request, response) {
 
               .project({
 
-                id: 1,
-
                 categoryName: 1,
 
                 contestName: 1
@@ -45,7 +43,7 @@ router.get("/contests", function (request, response) {
 
                 assert.ok(contest != null);
 
-                contests[contest.id] = contest;
+                contests[contest._id] = contest;
 
               }, function (error) {
 
@@ -64,7 +62,7 @@ router.get("/contests/:contestId", function (request, response) {
 
               .findOne({
 
-                id: Number(request.params.contestId)
+                _id: ObjectID(request.params.contestId)
 
               })
 
@@ -81,17 +79,17 @@ router.get("/contests/:contestId", function (request, response) {
 
 router.get("/names/:nameIds", function (request, response) {
 
-  const nameIds = request.params.nameIds.split(",").map(Number);
+  const nameIds = request.params.nameIds.split(",").map(ObjectID);
 
   let names = {};
 
-  testDataBase.collection("names").find({ id: { $in: nameIds }})
+  testDataBase.collection("names").find({ _id: { $in: nameIds }})
 
               .forEach( function (name) {
 
                 assert.ok(name != null);
 
-                names[name.id] = name;
+                names[name._id] = name;
 
               }, function (error) {
 
