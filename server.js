@@ -12,6 +12,8 @@ import path from "path";
 
 import serverRender from  "./serverRender";
 
+import bodyParser from "body-parser";
+
 const server = express();
 
 
@@ -41,10 +43,11 @@ server.get(["/", "/contest/:contestId"], function (request, response) {
       response.status(404).send("Bad Request");
 
     });
-
-
+    
 });
 
+
+server.use(bodyParser.json());
 
 server.use(express.static("public"));
 

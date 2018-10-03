@@ -102,4 +102,59 @@ router.get("/names/:nameIds", function (request, response) {
 });
 
 
+router.post("/names", function (request, response) {
+
+  const contestId = ObjectID(request.body.contestId);
+
+  const name = request.body.newName;
+
+  //validation...
+
+  testDataBase.collection("names").insertOne({ name })
+
+    .then( function (result) {
+
+      testDataBase.collection("contests").findAndModify(
+
+        { _id: contestId },
+
+        [],
+
+        { $push: { nameIds: result.insertedId} },
+
+        {new: true}
+
+      )
+
+      .then( function (doc) {
+
+        response.send({
+
+          updatedContest: doc.value,
+
+          newName: {
+
+            _id: result.insertedId,
+
+            name
+
+          }
+
+        });
+
+      })
+
+    })
+
+    .catch( function(error) {
+
+      console.error(error);
+
+      response.status(404).send("Bad Request");
+
+    });
+
+});
+
+
 export default router;
