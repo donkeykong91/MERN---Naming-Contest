@@ -5,11 +5,29 @@ import PropTypes from "prop-types";
 
 class Contest extends Component {
 
+  constructor(props) {
+
+    super(props);
+
+    this.newNameInput = React.createRef();
+
+  }
+
   componentDidMount() {
 
     this.props.fetchNames(this.props.nameIds);
 
   }
+
+  handleSubmit = event => {
+
+    event.preventDefault();
+
+    this.props.addName(this.newNameInput.current.value, this.props._id);
+
+    this.newNameInput.current.value = "";
+
+  };
 
   render() {
 
@@ -67,11 +85,11 @@ class Contest extends Component {
 
           <div className="panel-body">
 
-            <form>
+            <form onSubmit={this.handleSubmit}>
 
               <div className="input-group">
 
-                <input type="text" placeholder="New Name Here..." className="form-control" />
+                <input ref={this.newNameInput} type="text" placeholder="New Name Here..." className="form-control" />
 
                 <span className="input-group-btn">
 
@@ -117,7 +135,11 @@ Contest.propTypes = {
 
   nameIds: PropTypes.array.isRequired,
 
-  lookupName: PropTypes.func.isRequired
+  lookupName: PropTypes.func.isRequired,
+
+  addName: PropTypes.func.isRequired,
+
+  _id: PropTypes.string.isRequired
 
 };
 

@@ -36,3 +36,16 @@ export const fetchNames = function (nameIds) {
               });
 
 };
+
+
+export const addName = function(newName, contestId) {
+
+  return axios.post("/api/names", { newName, contestId })
+
+    .then(function (response) {
+
+      return response.data;
+
+    });
+
+}

@@ -178,6 +178,39 @@ class App extends React.Component {
   };
 
 
+  addName = (newName, contestId) => {
+
+    api.addName(newName, contestId)
+
+      .then ( response => {
+
+        this.setState({
+
+          contests: {
+
+            ...this.state.contests,
+
+            [response.updatedContest._id]: response.updatedContest
+
+          },
+
+          names: {
+
+            ...this.state.names,
+
+            [response.newName._id]: response.newName
+
+          }
+
+        });
+
+      })
+
+      .catch(console.error);
+
+  }
+
+
   currentContent() {
 
     if (this.state.currentContestId) {
@@ -191,6 +224,8 @@ class App extends React.Component {
           fetchNames={this.fetchNames}
 
           lookupName={this.lookupName}
+
+          addName={this.addName}
 
           {...this.currentContest()}
 
